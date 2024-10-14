@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tes</title>
+
+  <!-- FONT LINK -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <!-- ========= -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- STYLE CSS -->
+  <style>
+    :root {
+      /* color */
+      --background-color: #f6f6f6;
+      --blue-color: #42a5f5;
+      --white-color: #ffff;
+
+      /* box shadow */
+      --shadow-01: 0 0 5px rgba(0, 0, 0, 0.05);
+      --shadow-02: 2px 5px 5px rgba(95, 95, 95, 0.1);
+    }
+
+    body {
+      font-family: 'poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+    }
+
+    /* DETAIL PEMBELIAN */
+    #detailPembelian {
+      position: absolute;
+      width: 100%;
+      background: transparent;
+    }
+
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    #detailPembelian.activee .overlay {
+      opacity: 1;
+      pointer-events: auto;
+      position: fixed;
+      bottom: 0;
+    }
+
+    .modal-box {
+      width: 100%;
+      bottom: 0;
+      background-color: var(--white-color);
+      position: fixed;
+      transform: translateY(100px);
+      box-shadow: var(--shadow-01);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+      transition: all 0.5s ease;
+    }
+
+    #detailPembelian.activee .modal-box {
+      transform: translateY(0px);
+      pointer-events: auto;
+      position: fixed;
+
+      opacity: 1;
+    }
+
+    .modal-box h1 {
+      margin-left: 5%;
+      font-size: 20px;
+    }
+
+    .modal-box h2 {
+      margin-left: 5%;
+      font-size: 17px;
+      margin-top: -5px;
+    }
+
+    .modal-box p {
+      margin-top: 5px;
+      margin-left: 5%;
+      font-size: 15px;
+      opacity: 0.9;
+      text-align: left;
+      margin-right: 6%;
+    }
+
+    #linkUrl {
+      font-family: 'poppins';
+    }
+
+    #periksa {
+      color: #FF3434;
+      position: fixed;
+    }
+
+    .btn-close {
+      width: 40%;
+      height: 45px;
+      float: left;
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-bottom: 5%;
+      background-color: var(--white-color);
+      color: var(--blue-color);
+      border: 2px solid var(--blue-color);
+      padding-top: 7px;
+      padding-bottom: 7px;
+      text-align: center;
+      border-radius: 5px;
+      margin-top: 2%;
+    }
+
+    .btn-next {
+      margin-top: 2%;
+      width: 40%;
+      height: 45px;
+      float: left;
+      margin-left: 5%;
+      margin-right: 2%;
+      margin-bottom: 5%;
+      border: 2px solid var(--blue-color);
+      background-color: var(--blue-color);
+      color: rgb(255, 255, 255);
+      padding-top: 7px;
+      padding-bottom: 7px;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    /* =======END======= */
+
+
+    /* Header */
+    header {
+      width: 100%;
+      border-radius: 0 0 20px 20px;
+      background-color: var(--blue-color);
+      box-shadow: 0 0 5px rgba(46, 46, 46, 0.2);
+      height: 120px;
+
+    }
+
+    /* .panel {
+    margin: -15px 35px 15px 35px;
+    padding: 8px 6px 5px 8px;
+    flex-wrap: wrap;
+    background-color: var(--white-color);
+    border-radius: 13px;
+    box-shadow: var(--shadow-01);
+}
+
+.panel img {
+    width: 47px;
+    border-radius: 13px;
+    float: right;
+
+}
+
+.firstname {
+    color: rgb(37, 37, 37);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 2px 5px 2px 10px;
+}
+
+.lastname {
+    color: rgba(87, 86, 86, 0.692);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 5px 7px 10px;
+} */
+    /* =========END======== */
+
+
+
+    /*FORM PENGISIAN NOMOR */
+    .form {
+      margin: -6em 10px 5px 10px;
+      padding: 8px 8px 5px 8px;
+      flex-wrap: wrap;
+      background-color: var(--white-color);
+      border-radius: 13px;
+      box-shadow: var(--shadow-01);
+    }
+
+    .img-produk {
+      width: 40px;
+      border-radius: 13px;
+      float: left;
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-right: 10px;
+    }
+
+    .firstname {
+      color: rgb(37, 37, 37);
+      font-size: 20px;
+      font-weight: 700;
+      padding: 2px 5px 2px 10px;
+      margin-top: 14px;
+    }
+
+    .textid {
+      color: rgba(0, 0, 0, 0.795);
+      font-size: 15px;
+      font-weight: 600;
+      padding-left: 7px;
+      margin-top: -5px;
+      margin-bottom: 5px;
+
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+      color: #ff3434;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
+
+      75% {
+        transform: translateX(-5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .form-input {
+      position: relative;
+    }
+
+    .form-input input {
+      position: absolute;
+      width: 80%;
+      line-height: 40px;
+      margin: 8px;
+      outline: none;
+      font-size: 1em;
+      padding: 0 7px;
+      border-radius: 7px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background: transparent;
+    }
+
+    .form-input input,
+    label {
+      transition: 0.4s ease;
+    }
+
+    .form-input label {
+      left: 0;
+      padding: 0 5px;
+      margin: 10px;
+      margin-top: 17px;
+      cursor: text;
+      border-radius: 0;
+      background-color: rgb(255, 255, 255);
+      color: rgba(0, 0, 0, 0.15);
+      position: absolute;
+      pointer-events: none;
+    }
+
+    input::placeholder {
+      opacity: 0;
+    }
+
+    input:focus,
+    input:not(:placeholder-shown) {
+      border: 1px solid #42a5f5;
+    }
+
+    input:not(:placeholder-shown)~label,
+    input:focus~label {
+      transform: translate(10px, -21px) scale(0.8);
+      color: var(--blue-color);
+      border-left: 1px solid var(--blue-color);
+      border-right: 1px solid var(--blue-color);
+    }
+
+    form a {
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    form a img {
+      width: 25px;
+      float: right;
+      margin-right: 2%;
+      margin-top: 15px;
+    }
+
+    .notice {
+      font-size: 14px;
+      padding-left: 5%;
+      opacity: 0.8;
+      float: left;
+      clear: both;
+    }
+
+    /* =========END======== */
+
+
+
+    /* OPERATOR PULSA */
+    .Operator {
+      font-size: 1rem;
+      margin: 1.5rem;
+      margin-left: 25px;
+    }
+
+    /* ======END===== */
+
+
+
+    /* PRODUK */
+    #products-container {
+      max-width: 100vw;
+      height: 100vw;
+      margin: 0;
+      padding: 0;
+
+    }
+
+    .product {
+      width: 45%;
+      min-height: 70px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-01);
+      float: left;
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+      margin-bottom: 5%;
+      background: var(--white-color);
+      border: none;
+    }
+
+    .produk-pulsa {
+      width: 100%;
+    }
+
+    .product-details h2 {
+      color: black;
+      font-size: 15px;
+      margin-left: 5%;
+      margin-top: 5%;
+      margin-bottom: 5%;
+    }
+
+    .product-details p {
+      font-size: 12px;
+      margin-left: 5%;
+      margin-bottom: 2%;
+      margin-top: -5%;
+      opacity: 0.7;
+    }
+
+    .product-details h3 {
+      margin-left: 5%;
+      color: var(--blue-color);
+      font-weight: 500;
+      font-size: 15px;
+      margin-top: 5%;
+    }
+
+    /* ========END======= */
+  </style>
+  <!-- ======== -->
+</head>
+
+<body>
+
+  <!-- DETAIL PEMBELIAN -->
+  <div id="detailPembelian">
+    <span class="overlay"></span>
+    <div class="modal-box" id="paymentDetailsBody">
+      <br />
+    </div>
+  </div>
+  <!-- ================= -->
+
+  <!-- ===HEADER=== -->
+  <header>
+    <br>
+    <!-- <div class="panel">
+      <div class="saldo">
+        
+      </div>
+    </div> -->
+  </header>
+  <!-- ================ -->
+
+
+  <!-- PENGISIAN NOMOR -->
+  <div class="form">
+    <img class="img-produk" src="https://i.ibb.co/CvLw6ZJ/tokenpln.png" alt="" />
+    <div class="firstname">TOKEN LISTRIK</div><br>
+
+    <p class="textid">Masukkan Nomer</p>
+    <div class="form-input">
+      <form class="input-form" action="" method="GET" accept-charset="utf-8">
+        <input class="input {{hasil_kontak}}" type="tel" id="nomor" placeholder="nomor" oninput="cekNomorTelponUser()"
+          value="" />
+        <label for="nomor">nomer</label>
+        <a href="https://agencoin.olshopku.com/ambil_kontak">
+          <img src="https://i.ibb.co/TTJ6d2B/contact.png" alt="">
+        </a>
+      </form>
+    </div>
+    <br><br><br>
+  </div>
+  <!-- ================== -->
+
+  <!-- ==OPERATOR PULSA== -->
+  <h3 class="Operator"></h3>
+  <!-- ================== -->
+
+  <!-- =======PRODUK======= -->
+  <div id="products-container">
+    <div class="produk_pulsa" id="products"></div>
+    <div id="pagination"></div>
+  </div>
+  <!-- ==================== -->
+
+
+
+
+
+  <!-- URL JQUERY -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- ========== -->
+
+  <!--  GET API CEK ID/USER -->
+  <script>
+    var api = 'api cekid anda';
+
+    $('#cek').on('click', function () {
+      var id = $('#id').val();
+      $.ajax({
+        method: "POST",
+        url: "url cekid anda",
+        data: {
+          id: id,
+          key: api
+        },
+        beforeSend: function () {
+          $('#cek').text('Cek');
+        },
+        success: function (response) {
+          var modalBody = $('#modalBody');
+          if (response.hasOwnProperty('error_msg')) {
+            modalBody.text(response.error_msg);
+          } else {
+            modalBody.html('<p>Nama: ' + response.nama + '</p>' +
+              '<p>Daya: ' + response.daya + '</p>');
+          }
+          $('#resultModal').modal('show');
+        }
+      });
+    });
+  </script>
+  <!-- ============== -->
+
+
+
+  <!-- JAVASCRIPT KOMPONEN UTAMA -->
+  <script type="text/javascript">
+    const productsDiv = document.getElementById("products");
+    const paginationDiv = document.getElementById("pagination");
+    const inputNomor = document.getElementById('nomor');
+    const output = document.querySelector('.Operator');
+    const paymentDetailsBody = document.getElementById("paymentDetailsBody");
+    const searchData = {}; // Object to store search data
+
+
+    //TOKEN DI SINI
+    const tokenReal = "eyJhcHAiOiIxNTIzOTMiLCJhdXRoIjoiMjAyNDAyMjciLCJzaWduIjoibzl6d2E3T29XMXdlOGQzNWtWdVJCUT09In0="; // Replace "your_token_here" with your actual token
+
+    //TOKEN PALSU ABAIKAN
+    const tokenFake = "ini palsu cuy";
+
+
+    //FUNGSI UTAMA CEK NOMOR 
+    function cekNomorTelponUser(operator, tokenTipe) {
+
+      //AMBIL VALUE INPUTAN
+      const cek = inputNomor.value;
+      // id kategori token listrik
+      operator = 558479;
+      tokenTipe = tokenReal;
+
+
+
+
+      //KOMPONEN URL API
+      let token = tokenTipe;
+      let categoryId = operator;
+      let itemsPerPage = 50;
+      let currentPage = 1;
+      // URL API
+      let url = "https://openapi.bukaolshop.net/v1/app/produk?id_kategori=" + categoryId + "&token=" + token + "&total_data=" + itemsPerPage;
+
+
+
+      // API PRODUK
+      async function fetchProducts(page) {
+
+        var response = await fetch(url);
+        var productResponse = await response.json();
+
+        displayProducts(productResponse.data);
+        displayPagination(page, Math.ceil(productResponse.total / itemsPerPage));
+
+      }
+      //======END API=========
+
+
+      //FORMAT PRICE/HARGA
+      function formatPrice(price) {
+        return new Intl.NumberFormat('id-ID', { maximumSignificantDigits: '10', style: 'currency', currency: 'IDR' }).format(price);
+      }
+      //======END=========
+
+      //CETAK PRODUK
+      function displayProducts(products) {
+        //Tampilkan produk tergantung harga 
+        products.sort((a, b) => a.harga_produk - b.harga_produk);
+
+        productsDiv.innerHTML = "";
+        products.forEach(function (product) {
+          let productDiv = document.createElement("div");
+          productDiv.classList.add("product");
+
+          productDiv.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            let warning = document.querySelector(".textid");
+            // Jika nomor kosong warning dan shake
+            if (inputNomor.value == "") {
+              // Warning
+              warning.classList.add("shake");
+              warning.innerText = "*ID Dulu Kocak";
+              //Hapus warning text
+              setTimeout(function () {
+                warning.classList.remove("shake");
+                warning.innerText = "Masukkan Id";
+              }, 1000);
+            } else {
+              //Show produk detail
+              showProductDetails(product);
+            }
+          });
+
+          // Html produk
+          let productDetails = document.createElement("div");
+          productDetails.classList.add("product-details");
+
+          let productName = document.createElement("h2");
+          productName.textContent = product.nama_produk;
+          productName.classList.add("product-name");
+          productDetails.appendChild(productName);
+
+          let productPrice = document.createElement("h3");
+          productPrice.textContent = " " + formatPrice(product.harga_produk);
+          productPrice.classList.add("product-price");
+          productDetails.appendChild(productPrice);
+
+          productDiv.appendChild(productDetails);
+
+          productsDiv.appendChild(productDiv);
+        });
+      }
+      // ============END=================
+
+
+      //PAGES
+      function displayPagination(currentPage, totalPages) {
+        paginationDiv.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          var pageLink = document.createElement("a");
+          pageLink.href = "#";
+          pageLink.textContent = i;
+          pageLink.classList.add("pagination-link");
+          if (i === currentPage) {
+            pageLink.classList.add("active");
+          }
+          pageLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            fetchProducts(parseInt(event.target.textContent));
+          });
+          paginationDiv.appendChild(pageLink);
+        }
+      }
+      //=============END============
+
+
+      // HTML PRODUK DETAILS
+      function showProductDetails(product) {
+        paymentDetailsBody.innerHTML = `
+            <h1>Detail Pembelian</h1>
+            <p>Produk</p>
+            <h2 id="beliPulsa"> ${product.nama_produk}</h2>
+            <p>Nomor Tujuan :</p>
+            <h2 id="noTujuan"> ${inputNomor.value.trim()}</h2>
+            <p>Harga</p>
+            <h2 id="HargaBarang"> ${" " + formatPrice(product.harga_produk)}</h2>
+            <p id="linkUrl"> ${product.deskripsi_panjang}</p>
+            <p id="periksa"></p><br>
+            <button class="btn-close">Batal</button>
+
+            <button class="btn-next">
+            Lanjutkan
+            </button>
+        `;
+
+
+        //Komponen detail produk
+        let btnClose = document.querySelector(".btn-close");
+        let ovrClose = document.querySelector(".overlay");
+        let detail = document.getElementById("detailPembelian");
+        detail.classList.add("activee");
+        // Tombol close
+        btnClose.addEventListener("click", () => detail.classList.remove("activee"));
+        ovrClose.addEventListener("click", () => detail.classList.remove("activee"));
+
+
+        // Fungsi untuk kirim produk
+        var buyNowButton = document.querySelector('.btn-next');
+        buyNowButton.addEventListener("click", function () {
+          var urlProduk = product.url_produk + "?catatan=" + encodeURIComponent(inputNomor.value.trim());
+          var nomor = document.getElementById("noTujuan").innerHTML;
+          var warningNo = document.getElementById("periksa");
+
+          if (nomor == null || nomor.length < 10 || nomor.length > 13 || nomor == "" || nomor == "0" || nomor == "none") {
+            // jika nomor kosong jangan kirimkan data nomor harus lebih dari 10 karakter dan beri peringatan ke user
+            warningNo.innerText = "*Periksa Nomor Tujuan";
+            //hapus warning text
+            setTimeout(function () {
+              warningNo.innerText = "";
+            }, 3000);
+          } else {
+            // jika nomor ada isinya dan isinya lebih dari 10 karakter kirimkan data ke bukaolshop
+            window.location.href = urlProduk;
+          }
+        });
+      }
+      // =========END========
+
+
+      //CETAK FUNGSI SEMUA DISINI==
+      fetchProducts(currentPage);
+      //===========END================
+
+      productsDiv.addEventListener("click", function (event) {
+        var target = event.target;
+        if (target.classList.contains("product")) {
+          var product = {};
+          showProductDetails(product);
+        }
+      });
+    };
+
+    //CETAK SEMUA KOMPONEN DI SINI
+    cekNomorTelponUser();
+    //===========END================
+  </script>
+  <!-- ========================= -->
+
+
+
+</body>
+
+</html>
