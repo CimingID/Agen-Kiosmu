@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <!-- FONT LINK -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styl.css" />
+
+  <style type="text/css" media="all">
+:root {
+  /* color */
+  --background-color:#f6f6f6;
+  --blue-color:#42a5f5;
+  --white-color:#ffff;
+
+  /* box shadow */
+  --shadow-01: 0 0 5px rgba(0, 0, 0, 0.05);
+  --shadow-02: 2px 5px 5px rgba(95, 95, 95, 0.1);
+}
+
+    body {
+      font-family: 'poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+    }
+
+    /* DETAIL PEMBELIAN */
+    section {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+
+    
+
+    .overlay {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    section.activee .overlay {
+      opacity: 1;
+      pointer-events: auto;
+      position: fixed;
+    }
+
+    .modal-box {
+      width: 100%;
+      height: 60%;
+      background-color: var(--white-color);
+      position: fixed;
+      top: 60%;
+      box-shadow: var(--shadow-01);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+      transition: all 0.5s ease;
+    }
+
+    section.activee .modal-box {
+      transform: translateY(-100px);
+      pointer-events: auto;
+      position: fixed;
+      bottom: 0;
+      opacity: 1;
+    }
+
+    .modal-box h1 {
+      margin-left: 5%;
+      font-size: 20px;
+    }
+
+    .modal-box h2 {
+      margin-left: 5%;
+      font-size: 17px;
+      margin-top: -8px;
+    }
+
+    .modal-box p {
+      margin-top: -5px;
+      margin-left: 5%;
+      font-size: 15px;
+      opacity: 0.9;
+      text-align: left;
+      margin-right: 6%;
+    }
+
+    #periksa {
+      color: #FF3434;
+      position: fixed;
+    }
+
+    .btn-close {
+      width: 40%;
+      height: 45px;
+      float: left;
+      margin-left: 5%;
+      margin-right: 2%;
+      margin-bottom: 2%;
+      background-color: var(--white-color);
+      color: var(--blue-color);
+      border: 2px solid var(--blue-color);
+      padding-top: 7px;
+      padding-bottom: 7px;
+      text-align: center;
+      border-radius: 5px;
+      margin-top: 2%;
+    }
+
+    .btn-next {
+      margin-top: 2%;
+      width: 40%;
+      height: 45px;
+      float: left;
+      margin-left: 5%;
+      margin-right: 2%;
+      margin-bottom: 2%;
+      border: 2px solid var(--blue-color);
+      background-color: var(--blue-color);
+      color: rgb(255, 255, 255);
+      padding-top: 7px;
+      padding-bottom: 7px;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    /* Header */
+    header {
+      width: 100%;
+      border-radius: 0 0 20px 20px;
+      background-color: var(--blue-color);
+      box-shadow: 0 0 5px rgba(46, 46, 46, 0.2);
+      height: 50px;
+    }
+
+    .panel {
+      margin: -15px 35px 15px 35px;
+      padding: 8px 6px 5px 8px;
+      flex-wrap: wrap;
+      background-color: var(--white-color);
+      border-radius: 13px;
+      box-shadow: var(--shadow-01);
+    }
+
+    .panel img {
+      width: 47px;
+      border-radius: 13px;
+      float: right;
+      
+    }
+
+    .firstname {
+      color: rgb(37, 37, 37);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 2px 5px 2px 10px;
+    }
+
+    .lastname {
+      color: rgba(87, 86, 86, 0.692);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 5px 7px 10px;
+    }
+
+
+
+    /*FORM PENGISIAN NOMOR */
+    .form {
+      margin: 30px 10px 5px 10px;
+      padding: 8px 8px 5px 8px;
+      flex-wrap: wrap;
+      background-color: var(--white-color);
+      border-radius: 13px;
+      box-shadow: var(--shadow-01);
+    }
+
+    .textid {
+      font-size: 15px;
+      font-weight: 500;
+      padding-left: 7px;
+
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+      color: #ff3434;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
+
+      75% {
+        transform: translateX(-5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .form-input {
+      position: relative;
+    }
+
+    .form-input input {
+      position: absolute;
+      width: 90%;
+      line-height: 40px;
+      margin: 8px;
+      outline: none;
+      font-size: 1em;
+      padding: 0 7px;
+      border-radius: 7px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background: transparent;
+    }
+
+    .form-input input,
+    label {
+      transition: 0.4s ease;
+    }
+
+    .form-input label {
+      left: 0;
+      padding: 0 5px;
+      margin: 10px;
+      margin-top: 17px;
+      cursor: text;
+      border-radius: 0;
+      background-color: rgb(255, 255, 255);
+      color: rgba(0, 0, 0, 0.15);
+      position: absolute;
+      pointer-events: none;
+    }
+
+    input::placeholder {
+      opacity: 0;
+    }
+
+    input:focus,
+    input:not(:placeholder-shown) {
+      border: 1px solid #42a5f5;
+    }
+
+    input:not(:placeholder-shown)~label,
+    input:focus~label {
+      transform: translate(10px, -24px) scale(0.8);
+      color: var(--blue-color);
+      border-left: 1px solid var(--blue-color);
+      border-right: 1px solid var(--blue-color);
+    }
+
+    form a {
+      text-decoration: none;
+    }
+
+    form a img {
+      width: 25px;
+      float: right;
+      margin-right: 2%;
+      margin-top: 15px;
+    }
+
+    /* .warning {
+      position: absolute;
+      font-size: 15px;
+      margin-left: 10px;
+      margin-bottom: 2%;
+      margin-top: 15%;
+      opacity: 1;
+    } */
+
+
+
+    .notice {
+      font-size: 14px;
+      padding-left: 5%;
+      opacity: 0.8;
+      float: left;
+      clear: both;
+    }
+
+    /* #alertWarning {
+      font-size: 12px;
+      z-index: 10;
+    } */
+
+    /* #alertWarning h1 {
+      font-size: 20px;
+      position: absolute;
+      margin-top: -16%;
+      margin-left: 88%;
+      color: red;
+      z-index: 10;
+    } */
+
+    /* #img_operator {
+      position: absolute;
+      width: 10%;
+      height: auto;
+      margin-left: 5%;
+      margin-top: 3%;
+      z-index: 4;
+    }
+
+    .img_kontak {
+      position: absolute;
+      width: 8%;
+      height: auto;
+      margin-left: -7%;
+      z-index: 5;
+    } */
+
+
+    /* BUTTON KATEGORI */
+    .tombol {
+      background: transparent;
+    }
+
+    .tab {
+      border: none;
+      background-color: transparent;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .tab button {
+      background-color: inherit;
+      border: 1px solid var(--blue-color);
+      width: 45%;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: 0.3s;
+      color: var(--blue-color);
+      font-size: 15px;
+      float: left;
+      border-radius: 5px;
+      margin: 10px 2.5%;
+      padding: 5px;
+    }
+
+    .tab button.active {
+      background-color:var(--blue-color);
+      color: var(--white-color);
+      border: 1px solid var(--blue-color);
+      border-radius: 5px;
+    }
+
+    .tabcontent {
+      display: none;
+      border-top: none;
+      padding-top: 10px;
+    }
+
+
+
+    /* PRODUK */
+
+    .btn-show {
+      width: 45%;
+      min-height: 70px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-01);
+      float: left;
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+      margin-bottom: 5%;
+      background: var(--white-color);
+      border: none;
+    }
+
+    .produk_pulsa {
+      background: none;
+    }
+
+    .produk_pulsa h2 {
+      color: black;
+      font-size: 15px;
+      margin-left: 5%;
+      margin-top: 5%;
+      margin-bottom: 5%;
+    }
+
+    .produk_pulsa p {
+      font-size: 12px;
+      margin-left: 5%;
+      margin-bottom: 2%;
+      margin-top: -5%;
+      opacity: 0.7;
+    }
+
+    .produk_pulsa h3 {
+      margin-left: 5%;
+      color: var(--blue-color);
+      font-weight: 500;
+      font-size: 15px;
+      margin-top: 5%;
+    }
+
+
+    /* #pulsa_indosat,
+    #pulsa_simpati,
+    #pulsa_xl,
+    #pulsa_axis,
+    #pulsa_tri,
+    #pulsa_smartfren {
+      display: none;
+    } */
+
+    /* #spinner_load {
+      opacity: 0.6;
+    } */
+
+    /* #alertNomor {
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      opacity: 1;
+      background-color: white;
+      margin-top: -45%;
+      z-index: 10;
+      display: none;
+    } */
+
+
+    /* #operatorPulsa {
+      margin-left: 0.3px;
+      margin-top: 4px;
+      font-weight: 600;
+      font-size: 13px;
+    } */
+  </style>
+</head>
+
+<body>
+  <section>
+    <span class="overlay"></span>
+
+
+    <header>
+      <br>
+      <div class="panel">
+        <div class="saldo">
+          <img src="https://i.ibb.co/6mRkTKp/20240312-153058-min-11zon.png" alt="" />
+          <div class="firstname">Bearfish Coin</div>
+          <div class="lastname">Order ID</div>
+        </div>
+      </div>
+    </header>
+
+
+    <!-- PENGISIAN NOMOR -->
+    <div class="form">
+      <p class="textid">Masukkan Id</p>
+      <div class="form-input">
+        <form class="input-form" action="" method="get" accept-charset="utf-8">
+          <input class="input" type="number" name="nomor" id="nomor" placeholder="ID User"
+            oninput="cekNomorTelponUser()" value="" />
+          <label for="nomor">ID User</label>
+        </form>
+      </div>
+      <br><br><br>
+    </div>
+
+
+    <!-- BUTTON KATEGORI -->
+    <div class="tombol">
+      <div class="tab">
+        <button class="tablinks active" onclick="openCity(event, 'tab1here')">
+          <label for="tab1">Kuning Promo</label>
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'tab2here')">
+          <label for="tab2">MD Ungu</label>
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'tab3here')">
+          <label for="tab3">VIP Coin</label>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- DETAIL PEMBELIAN -->
+    <div class="modal-box">
+      <h1>Detail Pembelian</h1>
+      <p>Produk</p>
+      <h2 id="beliPulsa">none</h2>
+      <p>Nomor Tujuan :</p>
+      <h2 id="noTujuan">none</h2>
+      <p>Harga</p>
+      <h2 id="HargaBarang">none</h2>
+      <p id="linkUrl"></p>
+      <p id="periksa"></p><br>
+      <button class="btn-close">Batal</button>
+
+      <button class="btn-next" onclick="kirimData()">
+        Lanjutkan
+      </button>
+      <br />
+    </div>
+
+
+
+
+
+    <!-- KUNING PROMO-->
+    <div id="tab1here" class="tabcontent" style="display: block;">
+
+      <!-- PRODUK 1 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data1()">
+          <h2 id="nama_barang1">200M (Promo)
+          </h2>
+          <h3 id="harga_barang1">Rp10.000</h3>
+          <a id="url_barang1" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 2 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data2()">
+          <h2 id="nama_barang2">400M (Promo)
+          </h2>
+          <h3 id="harga_barang2">Rp20.000</h3>
+          <a id="url_barang2" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 3 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data3()">
+          <h2 id="nama_barang3">600M (Promo)
+          </h2>
+          <h3 id="harga_barang3">Rp30.000</h3>
+          <a id="url_barang3" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 4 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data4()">
+          <h2 id="nama_barang4">800M (Promo)
+          </h2>
+          <h3 id="harga_barang4">Rp40.000</h3>
+          <a id="url_barang4" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 5 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data5()">
+          <h2 id="nama_barang5">1B (Promo)
+          </h2>
+          <h3 id="harga_barang5">Rp55.000</h3>
+          <a id="url_barang5" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 6 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data6()">
+          <h2 id="nama_barang6">2B (Promo)
+          </h2>
+          <h3 id="harga_barang6">Rp110.000</h3>
+          <a id="url_barang6" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 7 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data7()">
+          <h2 id="nama_barang7">3B (Promo)
+          </h2>
+          <h3 id="harga_barang7">Rp165.000</h3>
+          <a id="url_barang7" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 8 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data8()">
+          <h2 id="nama_barang8">5B (Promo)
+          </h2>
+          <h3 id="harga_barang8">Rp275.000</h3>
+          <a id="url_barang8" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 9 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data9()">
+          <h2 id="nama_barang9">8B (Promo)
+          </h2>
+          <h3 id="harga_barang9">Rp435.000</h3>
+          <a id="url_barang9" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 10 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data10()">
+          <h2 id="nama_barang10">10B (Promo)
+          </h2>
+          <h3 id="harga_barang10">Rp550.000</h3>
+          <a id="url_barang10" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+    </div>
+
+    <!-- MD UNGU -->
+    <div id="tab2here" class="tabcontent" >
+      <!-- PRODUK 1 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data11()">
+          <h2 id="nama_barang11">60M (Ungu)
+          </h2>
+          <h3 id="harga_barang11">Rp8.600</h3>
+          <a id="url_barang11" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 2 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data12()">
+          <h2 id="nama_barang12">120M (Ungu)
+          </h2>
+          <h3 id="harga_barang12">Rp15.000</h3>
+          <a id="url_barang12" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 3 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data13()">
+          <h2 id="nama_barang13">180M (Ungu)
+          </h2>
+          <h3 id="harga_barang13">Rp19.000</h3>
+          <a id="url_barang13" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 4 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data14()">
+          <h2 id="nama_barang14">240M (Ungu)
+          </h2>
+          <h3 id="harga_barang14">Rp25.000</h3>
+          <a id="url_barang14" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 5 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data15()">
+          <h2 id="nama_barang15">300M (Ungu)
+          </h2>
+          <h3 id="harga_barang15">Rp33.000</h3>
+          <a id="url_barang15" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 6 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data16()">
+          <h2 id="nama_barang16">500M (Ungu)
+          </h2>
+          <h3 id="harga_barang16">Rp54.000</h3>
+          <a id="url_barang16" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 7 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data17()">
+          <h2 id="nama_barang17">1B (Ungu)
+          </h2>
+          <h3 id="harga_barang17">Rp71.000</h3>
+          <a id="url_barang17" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 8 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data18()">
+          <h2 id="nama_barang18">2B (Ungu)
+          </h2>
+          <h3 id="harga_barang18">Rp145.000</h3>
+          <a id="url_barang18" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 9 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data19()">
+          <h2 id="nama_barang19">3B (Ungu)
+          </h2>
+          <h3 id="harga_barang19">Rp215.000</h3>
+          <a id="url_barang19" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 10 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data20()">
+          <h2 id="nama_barang20">5B (Ungu)
+          </h2>
+          <h3 id="harga_barang20">Rp355.000</h3>
+          <a id="url_barang20" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+    </div>
+
+    <!-- TOP UP VIP -->
+    <div id="tab3here" class="tabcontent" >
+      <!-- PRODUK 1 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data21()">
+          <h2 id="nama_barang21">1B (VIP)
+          </h2>
+          <h3 id="harga_barang21">Rp80.000</h3>
+          <a id="url_barang21" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 2 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data22()">
+          <h2 id="nama_barang22">2B (VIP)
+          </h2>
+          <h3 id="harga_barang22">R158.000</h3>
+          <a id="url_barang22" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 3 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data23()">
+          <h2 id="nama_barang23">8B (VIP)
+          </h2>
+          <h3 id="harga_barang23">Rp630.000</h3>
+          <a id="url_barang23" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+      <!-- PRODUK 4 -->
+      <button class="btn-show">
+        <div class="produk_pulsa" id="produk" onclick="cetak_data24()">
+          <h2 id="nama_barang24">10B (VIP)
+          </h2>
+          <h3 id="harga_barang24">Rp789.000</h3>
+          <a id="url_barang24" href="https://idonpay.jualan.me/produk/indosat-10rb-1143411"></a>
+        </div>
+      </button>
+    </div>
+
+  </section>
+
+
+  <script>
+    // SIMPAN SEMUA HASIL CETAKAN DARI SEMUA FUNCTION KESINI
+    // CETAK NAMA BARANG
+    let cetakNama = document.getElementById("beliPulsa");
+    // CETAK HARGA BARANG
+    let cetakHarga = document.getElementById("HargaBarang");
+    // CETAK URL BARANG
+    let url = document.getElementById("linkUrl");
+    // CETAK NOMOR TUJUAN
+    let nomorTujuan = document.getElementById("noTujuan");
+    let nomorInputan = document.getElementById("nomor");
+
+    // CETAK OPERATOR PULSA
+    // let cetak_operator = document.getElementById("cetakOperator");
+
+    // cetak produk yang  manapun dan keluarkan hanya produk yang diklik oleh user dan ambil semua data dari html
+
+    // cara ini hanya untuk natif atau untuk bukaolshop
+    function cetak_data() {
+      nama = document.getElementById("nama_barang").innerHTML;
+      harga = document.getElementById("harga_barang").innerHTML;
+      url_barang = document.getElementById("url_barang").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+
+    function cetak_data1() {
+
+      nama = document.getElementById("nama_barang1").innerHTML;
+      harga = document.getElementById("harga_barang1").innerHTML;
+      url_barang = document.getElementById("url_barang1").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data2() {
+      nama = document.getElementById("nama_barang2").innerHTML;
+      harga = document.getElementById("harga_barang2").innerHTML;
+      url_barang = document.getElementById("url_barang2").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data3() {
+      nama = document.getElementById("nama_barang3").innerHTML;
+      harga = document.getElementById("harga_barang3").innerHTML;
+      url_barang = document.getElementById("url_barang3").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data4() {
+      nama = document.getElementById("nama_barang4").innerHTML;
+      harga = document.getElementById("harga_barang4").innerHTML;
+      url_barang = document.getElementById("url_barang4").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data5() {
+      nama = document.getElementById("nama_barang5").innerHTML;
+      harga = document.getElementById("harga_barang5").innerHTML;
+      url_barang = document.getElementById("url_barang5").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data6() {
+      nama = document.getElementById("nama_barang6").innerHTML;
+      harga = document.getElementById("harga_barang6").innerHTML;
+      url_barang = document.getElementById("url_barang6").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data7() {
+      nama = document.getElementById("nama_barang7").innerHTML;
+      harga = document.getElementById("harga_barang7").innerHTML;
+      url_barang = document.getElementById("url_barang7").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data8() {
+      nama = document.getElementById("nama_barang8").innerHTML;
+      harga = document.getElementById("harga_barang8").innerHTML;
+      url_barang = document.getElementById("url_barang8").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data9() {
+      nama = document.getElementById("nama_barang9").innerHTML;
+      harga = document.getElementById("harga_barang9").innerHTML;
+      url_barang = document.getElementById("url_barang9").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data10() {
+      nama = document.getElementById("nama_barang10").innerHTML;
+      harga = document.getElementById("harga_barang10").innerHTML;
+      url_barang = document.getElementById("url_barang10").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data11() {
+      nama = document.getElementById("nama_barang11").innerHTML;
+      harga = document.getElementById("harga_barang11").innerHTML;
+      url_barang = document.getElementById("url_barang11").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data12() {
+      nama = document.getElementById("nama_barang12").innerHTML;
+      harga = document.getElementById("harga_barang12").innerHTML;
+      url_barang = document.getElementById("url_barang12").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data13() {
+      nama = document.getElementById("nama_barang13").innerHTML;
+      harga = document.getElementById("harga_barang13").innerHTML;
+      url_barang = document.getElementById("url_barang13").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data14() {
+      nama = document.getElementById("nama_barang14").innerHTML;
+      harga = document.getElementById("harga_barang14").innerHTML;
+      url_barang = document.getElementById("url_barang14").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data15() {
+      nama = document.getElementById("nama_barang15").innerHTML;
+      harga = document.getElementById("harga_barang15").innerHTML;
+      url_barang = document.getElementById("url_barang15").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data16() {
+      nama = document.getElementById("nama_barang16").innerHTML;
+      harga = document.getElementById("harga_barang16").innerHTML;
+      url_barang = document.getElementById("url_barang16").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data17() {
+      nama = document.getElementById("nama_barang17").innerHTML;
+      harga = document.getElementById("harga_barang17").innerHTML;
+      url_barang = document.getElementById("url_barang17").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data18() {
+      nama = document.getElementById("nama_barang18").innerHTML;
+      harga = document.getElementById("harga_barang18").innerHTML;
+      url_barang = document.getElementById("url_barang18").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data19() {
+      nama = document.getElementById("nama_barang19").innerHTML;
+      harga = document.getElementById("harga_barang19").innerHTML;
+      url_barang = document.getElementById("url_barang19").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data20() {
+      nama = document.getElementById("nama_barang20").innerHTML;
+      harga = document.getElementById("harga_barang20").innerHTML;
+      url_barang = document.getElementById("url_barang20").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data21() {
+      nama = document.getElementById("nama_barang21").innerHTML;
+      harga = document.getElementById("harga_barang21").innerHTML;
+      url_barang = document.getElementById("url_barang21").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data22() {
+      nama = document.getElementById("nama_barang22").innerHTML;
+      harga = document.getElementById("harga_barang22").innerHTML;
+      url_barang = document.getElementById("url_barang22").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data23() {
+      nama = document.getElementById("nama_barang23").innerHTML;
+      harga = document.getElementById("harga_barang23").innerHTML;
+      url_barang = document.getElementById("url_barang23").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+    function cetak_data24() {
+      nama = document.getElementById("nama_barang24").innerHTML;
+      harga = document.getElementById("harga_barang24").innerHTML;
+      url_barang = document.getElementById("url_barang24").href;
+      let nomorInputan = document.getElementById("nomor").value.replace(/\s+/g, '');
+      //let operator = document.getElementById("operatorPulsa").innerHTML;
+
+      cetakNama.innerHTML = nama;
+      cetakHarga.innerHTML = harga;
+      url = url_barang;
+      nomorTujuan.innerHTML = nomorInputan;
+      //cetakOperator.innerHTML = operator;
+    }
+
+
+
+
+
+
+
+    //FUNGSI WARNING,DETAIL PEMBELIAN
+    const section = document.querySelector("section"),
+      overlay = document.querySelector(".overlay"),
+      btnShow = document.querySelectorAll(".btn-show"),
+      closeBtn = document.querySelector(".btn-close"),
+      form = document.querySelector("form"),
+      eInput = form.querySelector(".input"),
+      warning = document.querySelector(".textid");
+
+    //FUNGSI TOMBOL,WARNING
+    for (let i = 0; i < btnShow.length; i++) {
+      btnShow[i].addEventListener("click", (e) => {
+        e.preventDefault();
+        if (eInput.value == "") {
+          warning.classList.add("shake");
+          warning.innerText = "*ID Dulu Kocak";
+          //HAPUS WARNING TEXT
+          setTimeout(function () {
+            warning.classList.remove("shake");
+            warning.innerText = "Masukkan Id";
+          }, 1000);
+        } else {
+          //TOMBOL OPEN
+          section.classList.add("activee");
+        }
+      });
+    }
+    //TOMBOL CLOSE
+    overlay.addEventListener("click", () => section.classList.remove("activee"));
+    closeBtn.addEventListener("click", () => section.classList.remove("activee"));
+
+
+    // SEBELUM KIRIM DATA NOMOR TUJUAN PERIKSA DAN HILANGKAN SEMUA SIMBOL SIMBOL DAN HURUF, CETAK HANYA ANGKA SAJA DAN BERIKAN SPASI DI INPUTAN
+    // hasil inputan tidak boleh lebih dari 13 karakter
+    document.getElementById('nomor').addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '').replace(/(.{12})/g, '$1 ').substring(0, 16).trim();
+    });
+
+
+    //buat fungsi untuk kirim produk yg dipilih user ke bukaolshop
+    function kirimData() {
+      // ambil url inputan user 
+      const link = url;
+      // masukkan catatan parameter dari bukaolshop
+      const catatan = "?catatan=";
+      // ambil nomor dari hasil inputan user dan hilangkan semua karakter selain ANGKA
+      const nomor = document.getElementById('noTujuan').innerHTML;
+      const warrning = document.getElementById('periksa');
+      // sebelum mengirimkan data 
+      //periksa dulu apakah nomor tujuan sudah di isi
+      //periksa juga produk user dan periksa harga produk
+      if (nomor == null || nomor.length < 5 || nomor == "" || nomor == "0" || nomor == "none") {
+        // jika nomor kosong jangan kirimkan data nomor harus lebih dari 10 karakter dan beri peringatan ke user
+        warrning.innerText = "*Periksa Nomor Tujuan";
+        //hapus warning text
+        setTimeout(function () {
+          warrning.innerText = "";
+        }, 3000);
+      } else {
+        // jika nomor ada isinya dan isinya lebih dari 5 karakter kirimkan data ke bukaolshop
+        window.location.href = link + catatan + nomor;
+      }
+    }
+  </script>
+
+  <script>
+    //BUTTON KATEGORI
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
+</body>
+
+</html>
